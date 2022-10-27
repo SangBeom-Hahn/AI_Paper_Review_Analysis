@@ -1,4 +1,6 @@
-<h3>모델 가중치 저장</h3>
+<ul>
+  <li><h3>모델 가중치 저장</h3></li>
+</ul>
 
 ```python
 def save_weight_to_json(model):
@@ -31,10 +33,10 @@ def load_weight_to_json():
 ```
 
 
+<ul>
+  <li><h3>손실 그래프 생성</h3></li>
+</ul>
 
-
-
-<h3>손실 그래프 생성</h3>
 ```python
 def plotLoss(G_loss, D_loss, epoch):
   cur_dir = os.getcwd()
@@ -54,7 +56,11 @@ def plotLoss(G_loss, D_loss, epoch):
   plt.savefig(file_path)
 ```
 
-<h3>GAN 생성 이미지 저장</h3>
+
+<ul>
+  <li><h3>GAN 생성 이미지 저장</h3></li>
+</ul>
+
 ```python
 def sample_images(epoch, latent_dim = 128):
   cur_dir = os.getcwd()
@@ -86,9 +92,10 @@ def sample_images(epoch, latent_dim = 128):
 
 
 
+<ul>
+  <li><h3>모델 저장</h3></li>
+</ul>
 
-
-<h3>모델 저장</h3>
 ```python
 def save_model(model, model_path='saved_model/model.h5'):
   print('\nsave model : \"{}\"'.format(model_path))
@@ -96,9 +103,10 @@ def save_model(model, model_path='saved_model/model.h5'):
 ```
 
 
+<ul>
+  <li><h3>모델 로드</h3></li>
+</ul>
 
-
-<h3>모델 로드</h3>
 ```python
 def load_model(model, model_path='saved_model/model.h5'):
   print('\nload model : \"{}\"'.format(model_path))
