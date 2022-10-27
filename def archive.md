@@ -16,6 +16,8 @@ def save_weight_to_json(model):
     json_file.write(model_json)
 ```
 
+
+
 <h3>모델 가중치 로드</h3>
 ```python
 def load_weight_to_json():
@@ -25,6 +27,9 @@ def load_weight_to_json():
 
   loaded_model = model_from_json(loaded_model_json)
 ```
+
+
+
 
 
 <h3>손실 그래프 생성</h3>
@@ -77,12 +82,19 @@ def sample_images(epoch, latent_dim = 128):
   plt.close()
 ```
 
+
+
+
+
 <h3>모델 저장</h3>
 ```python
 def save_model(model, model_path='saved_model/model.h5'):
   print('\nsave model : \"{}\"'.format(model_path))
   model.save(model_path)
 ```
+
+
+
 
 <h3>모델 로드</h3>
 ```python
