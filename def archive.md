@@ -17,17 +17,18 @@ def save_weight_to_json(model):
 ```
 
 
+<ul>
+  <li><h3>모델 가중치 로드</h3></li>
+</ul>
 
-<h3>모델 가중치 로드</h3>
-<pre><code>
-python
+```python
 def load_weight_to_json():
   json_file = open("model.json", "r")
   loaded_model_json = json_file.read() 
   json_file.close()
 
   loaded_model = model_from_json(loaded_model_json)
-</pre></code>
+```
 
 
 
