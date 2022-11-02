@@ -10,7 +10,7 @@ def save_weight_to_json(model):
   dir = os.path.join(cur_dir, ckpt_dir) 
   os.makedirs(dir, exist_ok = True) # dir이라는 폴더를 만듬
 
-  file_path = os.path.join(dir, file_name) #dir 경로 + 파일 이름의 파일 경로를 join함
+  file_path = os.path.join(dir, file_name) # dir 경로 + 파일 이름의 파일 경로를 join함
   model.save_weights(file_path)
 
   model_json = model.to_json() # 모델 구조도 저장하여 model.json으로 저장
