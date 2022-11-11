@@ -112,3 +112,42 @@ def load_model(model, model_path='saved_model/model.h5'):
   print('\nload model : \"{}\"'.format(model_path))
   model = tf.keras.models.load_model(model_path)
 ```
+
+
+<ul>
+  <li><h3>이미지 데이터 끌어모아서 한 곳에 저장</h3></li>
+</ul>
+
+```python
+def create_target_images():
+    pathname = f'{config.ZAPPOS_DATASET_SNEAKERS_DIR}/*/*.jpg' 
+    print(pathname)
+    print(glob.glob(pathname)) 
+  
+    for filepath in glob.glob(pathname):
+        filename = os.path.basename(filepath)
+        img_target = load_img(filepath, target_size=(config.IMG_HEIGHT, config.IMG_WIDTH))
+        img_target = np.array(img_target)  
+        img_target_filepath = os.path.join(config.TRAINING_TARGET_DIR, filename) 
+        save_img(img_target_filepath, img_target) 
+```
+
+
+<ul>
+  <li><h3>한 폴더에 모여있는 이미지 데이터 다른 폴더로 옮기기</h3></li>
+</ul>
+
+
+```python
+def create_source_imgs(target_dir, source_dir):
+    pathname = f'{target_dir}/*.jpg' # data/training/target
+    print(pathname)
+    for filepath in glob.glob(pathname):
+        img_target = load_img(filepath, target_size=(config.IMG_HEIGHT, config.IMG_WIDTH))
+        img_target = np.array(img_target)
+        img_source = detect_edges(img_target)
+
+        filename = os.path.basename(filepath)
+        img_source_filepath = os.path.join(source_dir, filename)
+        save_img(img_source_filepath, img_source)
+```
