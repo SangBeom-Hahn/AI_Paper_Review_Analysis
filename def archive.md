@@ -14,7 +14,7 @@ def save_weight_to_json(model):
   model.save_weights(file_path)
 
   model_json = model.to_json() # 모델 구조도 저장하여 model.json으로 저장
-  with open("model.json", "w") as json_file : 
+  with open("model.json", "w") as json_file: 
     json_file.write(model_json)
 ```
 
