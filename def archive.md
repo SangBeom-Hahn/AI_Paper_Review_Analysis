@@ -157,7 +157,7 @@ def create_source_imgs(target_dir, source_dir):
   <li><h3>이미지(jpg)든 뭐든 csv로 만들기</h3></li>
 </ul>
 
-```
+```python
 import os, natsort, csv, re
 
 file_path = 'photo/'
