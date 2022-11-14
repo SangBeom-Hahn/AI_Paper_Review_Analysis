@@ -172,3 +172,18 @@ for file_name in file_lists:
     wr.writerow([file_name, re.sub('-\d*[.]\w{3}', '', file_name)])
 f.close()
 ```
+
+<ul>
+  <li><h3>이미지 자르기</h3></li>
+</ul>
+
+```python
+import cv2
+
+def seperateImg(img): # img = '/content/drive/MyDrive/Colab Notebooks/KakaoTalk_20220916_023415527.jpg'
+    src = cv2.imread(img, cv2.IMREAD_UNCHANGED)
+    dst1 = src[:, 0:256].copy()   # 선만 있는 거
+    dst2 = src[:, 257:512].copy()  # 색 있는 거
+    cv2.imwrite('/content/drive/MyDrive/Colab Notebooks/color.jpg',dst1)  # 저장
+    cv2.imwrite('/content/drive/MyDrive/Colab Notebooks/color2.jpg',dst2)  # 저장
+```
