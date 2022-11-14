@@ -151,3 +151,24 @@ def create_source_imgs(target_dir, source_dir):
         img_source_filepath = os.path.join(source_dir, filename)
         save_img(img_source_filepath, img_source)
 ```
+
+
+<ul>
+  <li><h3>이미지(jpg)든 뭐든 csv로 만들기</h3></li>
+</ul>
+
+```
+import os, natsort, csv, re
+
+file_path = 'photo/'
+file_lists = os.listdir(file_path)
+file_lists = natsort.natsorted(file_lists)
+
+f = open('train.csv', 'w', encoding='utf-8') #valid.csv, test.csv
+wr = csv.writer(f)
+wr.writerow(["Img_name", "Class"])
+for file_name in file_lists:
+    print(file_name)
+    wr.writerow([file_name, re.sub('-\d*[.]\w{3}', '', file_name)])
+f.close()
+```
