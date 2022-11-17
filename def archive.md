@@ -187,3 +187,16 @@ def seperateImg(img): # img = '/content/drive/MyDrive/Colab Notebooks/KakaoTalk_
     cv2.imwrite('/content/drive/MyDrive/Colab Notebooks/color.jpg',dst1)  # 저장
     cv2.imwrite('/content/drive/MyDrive/Colab Notebooks/color2.jpg',dst2)  # 저장
 ```
+
+<ul>
+  <li><h3>크롤링 이미지 mnist 형태로 </h3></li>
+</ul>
+
+```python
+# 이미지 읽어서 데이터 준비하기
+paths = glob.glob('./notMNIST_small/*/*.png')
+paths = np.random.permutation(paths)
+독립 = np.array([plt.imread(paths[i]) for i in range(len(paths))])
+종속 = np.array([paths[i].split('/')[-2] for i in range(len(paths))])
+print(독립.shape, 종속.shape)
+```
