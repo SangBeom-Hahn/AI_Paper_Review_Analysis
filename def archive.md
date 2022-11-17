@@ -160,17 +160,19 @@ def create_source_imgs(target_dir, source_dir):
 ```python
 import os, natsort, csv, re
 
-file_path = 'photo/'
-file_lists = os.listdir(file_path)
-file_lists = natsort.natsorted(file_lists)
+# file_path = 'photo/'
 
-f = open('train.csv', 'w', encoding='utf-8') #valid.csv, test.csv
-wr = csv.writer(f)
-wr.writerow(["Img_name", "Class"])
-for file_name in file_lists:
-    print(file_name)
-    wr.writerow([file_name, re.sub('-\d*[.]\w{3}', '', file_name)])
-f.close()
+def toCSV(file_path):
+    file_lists = os.listdir(file_path)
+    file_lists = natsort.natsorted(file_lists)
+
+    f = open('train.csv', 'w', encoding='utf-8') #valid.csv, test.csv
+    wr = csv.writer(f)
+    wr.writerow(["Img_name", "Class"])
+    for file_name in file_lists:
+        print(file_name)
+        wr.writerow([file_name, re.sub('-\d*[.]\w{3}', '', file_name)])
+    f.close()
 ```
 
 <ul>
@@ -193,10 +195,12 @@ def seperateImg(img): # img = '/content/drive/MyDrive/Colab Notebooks/KakaoTalk_
 </ul>
 
 ```python
-# 이미지 읽어서 데이터 준비하기
-paths = glob.glob('./notMNIST_small/*/*.png')
-paths = np.random.permutation(paths)
-독립 = np.array([plt.imread(paths[i]) for i in range(len(paths))])
-종속 = np.array([paths[i].split('/')[-2] for i in range(len(paths))])
-print(독립.shape, 종속.shape)
+# image_file_path = './notMNIST_small/*/*.png'
+
+def myImage(image_file_path):
+    paths = glob.glob(image_file_path)
+    paths = np.random.permutation(paths)
+    독립 = np.array([plt.imread(paths[i]) for i in range(len(paths))])
+    종속 = np.array([paths[i].split('/')[-2] for i in range(len(paths))])
+    print(독립.shape, 종속.shape)
 ```
