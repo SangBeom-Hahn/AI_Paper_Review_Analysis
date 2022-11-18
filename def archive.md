@@ -204,3 +204,37 @@ def myImage(image_file_path):
     종속 = np.array([paths[i].split('/')[-2] for i in range(len(paths))])
     print(독립.shape, 종속.shape)
 ```
+
+<ul>
+  <li><h3>train_X 시각화 </h3></li>
+</ul>
+
+```python
+import matplotlib.pyplot as plt
+
+def visualizeTrainX():
+    ncols = 10 # 조정
+
+    figure, axs = plt.subplots(figsize = (10, 5), nrows=1, ncols = ncols)
+
+    for i in range(ncols):
+      axs[i].imshow(train_images[i]) # (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
+```
+
+<ul>
+  <li><h3>훈련 정확도, 손실 </h3></li>
+</ul>
+
+```python
+import matplotlib.pyplot as plt
+
+def show_history(history):
+    plt.plot(history.history['accuracy'], label='train')
+    plt.plot(history.history['val_accuracy'], label='valid')
+    plt.legend()
+    
+def show_history(history):
+    plt.plot(history.history['loss'], label='train')
+    plt.plot(history.history['val_loss'], label='valid')
+    plt.legend()
+```
