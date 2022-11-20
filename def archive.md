@@ -191,7 +191,7 @@ def seperateImg(img): # img = '/content/drive/MyDrive/Colab Notebooks/KakaoTalk_
 ```
 
 <ul>
-  <li><h3>크롤링 이미지 mnist 형태로 </h3></li>
+  <li><h3>크롤링 이미지 mnist 형태로</h3></li>
 </ul>
 
 ```python
