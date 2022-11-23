@@ -272,4 +272,14 @@ def visualizeTrainX():
 ```
 
 
-## 
+## nlp
+
+<ul>
+  <li><h3>max_len 구하기</h3></li>
+</ul>
+
+```python
+def get_max_len(sentences):
+    seq_lengths = np.array([len(s.split()) for s in sentences])
+    print([(p, np.percentile(seq_lengths, p)) for p in [75, 80, 90, 95, 99, 100]])
+```
