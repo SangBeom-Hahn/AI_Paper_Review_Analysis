@@ -60,41 +60,6 @@ def plotLoss(G_loss, D_loss, epoch):
 
 
 <ul>
-  <li><h3>GAN 생성 이미지 저장</h3></li>
-</ul>
-
-```python
-def sample_images(epoch, latent_dim = 128):
-  cur_dir = os.getcwd()
-  image_dir = "images"
-  file_name = '%d.png' % epoch
-  dir = os.path.join(cur_dir, image_dir) 
-  os.makedirs(dir, exist_ok = True)
-
-  file_path = os.path.join(dir, file_name)
-
-
-  r, c = 5, 5
-  noise = np.random.normal(0, 1, (r * c, latent_dim))
-  gen_imgs = generator.predict(noise)
-
-  # Rescale images 0 - 1
-  gen_imgs = 0.5 * gen_imgs + 0.5
-
-  fig, axs = plt.subplots(r, c)
-  cnt = 0
-  for i in range(r):
-      for j in range(c):
-          axs[i,j].imshow(gen_imgs[cnt, :,:,0], cmap='gray')
-          axs[i,j].axis('off')
-          cnt += 1
-  fig.savefig(file_path)
-  plt.close()
-```
-
-
-
-<ul>
   <li><h3>모델 저장</h3></li>
 </ul>
 
@@ -134,6 +99,39 @@ def show_history(history):
 ```
 
 ## cv
+
+<ul>
+  <li><h3>GAN 생성 이미지 저장</h3></li>
+</ul>
+
+```python
+def sample_images(epoch, latent_dim = 128):
+  cur_dir = os.getcwd()
+  image_dir = "images"
+  file_name = '%d.png' % epoch
+  dir = os.path.join(cur_dir, image_dir) 
+  os.makedirs(dir, exist_ok = True)
+
+  file_path = os.path.join(dir, file_name)
+
+
+  r, c = 5, 5
+  noise = np.random.normal(0, 1, (r * c, latent_dim))
+  gen_imgs = generator.predict(noise)
+
+  # Rescale images 0 - 1
+  gen_imgs = 0.5 * gen_imgs + 0.5
+
+  fig, axs = plt.subplots(r, c)
+  cnt = 0
+  for i in range(r):
+      for j in range(c):
+          axs[i,j].imshow(gen_imgs[cnt, :,:,0], cmap='gray')
+          axs[i,j].axis('off')
+          cnt += 1
+  fig.savefig(file_path)
+  plt.close()
+```
 
 <ul>
   <li><h3>이미지 데이터 끌어모아서 한 곳에 저장</h3></li>
@@ -241,3 +239,6 @@ def visualizeTrainX():
     for i in range(ncols):
       axs[i].imshow(train_images[i]) # (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
 ```
+
+
+## 
