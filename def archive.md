@@ -98,7 +98,7 @@ def show_history(history):
     plt.legend()
 ```
 
-## cv
+## cv -> 참고 : 이미지는 머러, gan, adv만 보면 된다.
 
 <ul>
   <li><h3>GAN 생성 이미지 저장</h3></li>
