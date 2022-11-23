@@ -1,3 +1,5 @@
+## 공통
+
 <ul>
   <li><h3>모델 가중치 저장</h3></li>
 </ul>
@@ -113,6 +115,25 @@ def load_model(model, model_path='saved_model/model.h5'):
   model = tf.keras.models.load_model(model_path)
 ```
 
+<ul>
+  <li><h3>훈련 정확도, 손실 </h3></li>
+</ul>
+
+```python
+import matplotlib.pyplot as plt
+
+def show_history(history):
+    plt.plot(history.history['accuracy'], label='train')
+    plt.plot(history.history['val_accuracy'], label='valid')
+    plt.legend()
+    
+def show_history(history):
+    plt.plot(history.history['loss'], label='train')
+    plt.plot(history.history['val_loss'], label='valid')
+    plt.legend()
+```
+
+## cv
 
 <ul>
   <li><h3>이미지 데이터 끌어모아서 한 곳에 저장</h3></li>
@@ -219,22 +240,4 @@ def visualizeTrainX():
 
     for i in range(ncols):
       axs[i].imshow(train_images[i]) # (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
-```
-
-<ul>
-  <li><h3>훈련 정확도, 손실 </h3></li>
-</ul>
-
-```python
-import matplotlib.pyplot as plt
-
-def show_history(history):
-    plt.plot(history.history['accuracy'], label='train')
-    plt.plot(history.history['val_accuracy'], label='valid')
-    plt.legend()
-    
-def show_history(history):
-    plt.plot(history.history['loss'], label='train')
-    plt.plot(history.history['val_loss'], label='valid')
-    plt.legend()
 ```
