@@ -152,6 +152,7 @@ def create_target_images():
 ```
 
 
+
 <ul>
   <li><h3>한 폴더에 모여있는 이미지 데이터 다른 폴더로 옮기기</h3></li>
 </ul>
@@ -171,6 +172,36 @@ def create_source_imgs(target_dir, source_dir):
         save_img(img_source_filepath, img_source)
 ```
 
+<ul>
+  <li><h3>폴더 내 모든 이미지 edge detection</h3></li>
+</ul>
+
+```python
+import cv2
+
+def detect_edges(img):
+    img_gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+    img_gray = cv2.bilateralFilter(img_gray, 5, 50, 50)
+    img_gray_edges = cv2.Canny(img_gray, 45, 100)
+    img_gray_edges = cv2.bitwise_not(img_gray_edges) # invert black/white
+    img_edges = cv2.cvtColor(img_gray_edges, cv2.COLOR_GRAY2RGB)
+    
+    return img_edges
+
+def create_edge_imgs(target_dir, source_dir):
+    pathname = f'{target_dir}/*.jpg' # target_dir에 폴더명
+    for filepath in glob.glob(pathname):
+        img_target = load_img(filepath, target_size=(256, 256))
+        img_target = np.array(img_target)
+        img_source = detect_edges(img_target) # 아 소스 이미지는 엣지 이미지구나
+
+        filename = os.path.basename(filepath)
+        img_source_filepath = os.path.join(source_dir, filename)
+        save_img(img_source_filepath, img_source) 
+        
+# 사용법 : 원본 이미지 폴더 경로, 엣지 이미지를 저장할 폴더 경로
+# create_edge_imgs("/content/trainB", "/content/trainA")
+```
 
 <ul>
   <li><h3>이미지(jpg)든 뭐든 csv로 만들기</h3></li>
