@@ -87,7 +87,7 @@ def load_model(model, model_path='saved_model/model.h5'):
 ```python
 import matplotlib.pyplot as plt
 
-def show_history(history):
+def show_history(history): # history에 val를 뽑으려면 fit할 때 validation_data를 써야한다.
     plt.plot(history.history['accuracy'], label='train')
     plt.plot(history.history['val_accuracy'], label='valid')
     plt.legend()
