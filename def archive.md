@@ -251,7 +251,7 @@ def myImage(image_file_path):
     paths = glob.glob(image_file_path)
     paths = np.random.permutation(paths)
     독립 = np.array([plt.imread(paths[i]) for i in range(len(paths))])
-    종속 = np.array([paths[i].split('/')[-2] for i in range(len(paths))])
+    종속 = np.array([paths[i].split('/')[-2] for i in range(len(paths))]) # A/test.jpg -> 클래스 A, B/test1.jpg -> 클래스 
     print(독립.shape, 종속.shape)
 ```
 
