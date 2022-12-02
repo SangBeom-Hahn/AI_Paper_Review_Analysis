@@ -6,7 +6,7 @@
 
 ```python
 def save_weight_to_json(model):
-  cur_dir = os.getcwd() # 현재 작업 디렉
+  cur_dir = os.getcwd() # 현재 작업 디렉터리
   ckpt_dir = "checkpoints" # weight를 저장할 디렉토리
   file_name = "weights.ckpt" # 저장 파일명
   dir = os.path.join(cur_dir, ckpt_dir) 
