@@ -178,7 +178,7 @@ def create_source_imgs(target_dir, source_dir):
 
 ```python
 import cv2
-from keras_preprocessing.image import load_img
+from keras_preprocessing.image import load_img, save_img
 
 def detect_edges(img):
     img_gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
