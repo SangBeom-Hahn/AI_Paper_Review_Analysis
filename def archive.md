@@ -256,7 +256,7 @@ def myImage(image_file_path):
 ```
 
 <ul>
-  <li><h3>train_X 시각화 </h3></li>
+  <li><h3>train_X 시각화</h3></li>
 </ul>
 
 ```python
