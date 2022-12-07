@@ -173,7 +173,7 @@ def create_source_imgs(target_dir, source_dir):
 ```
 
 <ul>
-  <li><h3>폴더 내 모든 이미지 edge detection</h3></li>
+  <li><h3>폴더 내 모든 이미지 edge detection </h3></li>
 </ul>
 
 ```python
