@@ -36,7 +36,7 @@ def load_weight_to_json():
 
 
 <ul>
-  <li><h3>손실 그래프 생성</h3></li>
+  <li><h3>손실 그래프 생성 </h3></li>
 </ul>
 
 ```python
