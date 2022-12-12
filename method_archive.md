@@ -98,7 +98,7 @@ def show_history(history):
     plt.legend()
 ```
 
-## cv -> 참고 : 이미지는 머러, gan, adv, 논문 분석 레포만 보면 된다.
+## cv -> 참고 : 이미지는 머러(3, 4), adv(gan), 논문 분석 레포만 보면 된다.
 
 <ul>
   <li><h3>GAN 생성 이미지 저장</h3></li>
@@ -273,7 +273,7 @@ def visualizeTrainX():
 ```
 
 
-## nlp
+## nlp -> 참고 : 텍스트는 머러(7, 8), 메타코드(영화리뷰), base(Q/A), 논문 분석 레포만 보면 된다,
 
 <ul>
   <li><h3>max_len 구하기</h3></li>
