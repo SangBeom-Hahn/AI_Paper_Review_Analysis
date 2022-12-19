@@ -36,6 +36,24 @@ def load_weight_to_json():
 
 
 <ul>
+  <li><h3>훈련 중단 후 재개시 가중치 로드</h3></li>
+</ul>
+
+```python
+LOAD_FROM_CK_PT = False
+if LOAD_FROM_CK_PT:
+    num = '00210'
+    gen_model = load_model(f'output_b4_pts250/models/{num}_gen_model.h5')
+    d_model = load_model(f'output_b4_pts250/models/{num}_d_model.h5')
+else:
+    gen_model = get_generator_model()
+    d_model = get_discriminator_model()
+
+gan_model = get_gan_model(gen_model, d_model, L1_loss_lambda=100)
+```
+
+
+<ul>
   <li><h3>손실 그래프 생성 </h3></li>
 </ul>
 
