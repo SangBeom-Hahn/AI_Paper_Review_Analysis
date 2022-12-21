@@ -10,7 +10,7 @@ def save_weight_to_json(model):
   ckpt_dir = "checkpoints" # weight를 저장할 디렉토리
   file_name = "weights.ckpt" # 저장 파일명
   dir = os.path.join(cur_dir, ckpt_dir) 
-  os.makedirs(dir, exist_ok = True) # di를 만듬
+  os.makedirs(dir, exist_ok = True) # dir를 만듬
 
   file_path = os.path.join(dir, file_name) # dir 경로 + 파일 이름의 파일 경로를 join함
   model.save_weights(file_path)
