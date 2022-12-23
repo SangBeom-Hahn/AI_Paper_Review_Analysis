@@ -29,7 +29,7 @@ def build_discriminator(img_shape):
 ```
 
 ## Model
-![model](./assests/model.png)
+![model](./assests/model.PNG)
 
 
 
