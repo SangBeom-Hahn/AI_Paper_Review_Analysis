@@ -37,7 +37,7 @@ def myImage(image_file_path):
 
 #### Image
 <ul>
-  <li><h3>mnist 예제</h3></li>
+  <li><h3>mnist 예제 </h3></li>
 </ul>
 
 ```python
