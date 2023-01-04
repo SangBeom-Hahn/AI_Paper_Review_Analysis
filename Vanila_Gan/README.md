@@ -55,5 +55,5 @@ def build_discriminator(img_shape):
 ## Author
 👤 **SangBoem-Hahn**
 
-- Github: [@SangBoem-Hahn](https://github.com/SangBoem-Hahn)
+- Github: [@SangBoem-Hahn](https://github.com/SangBeom-Hahn)
 - Blog : [Tistory(GAN)](https://hsb422.tistory.com/entry/%EB%AF%B8%EB%85%BC%EB%AC%B8-%EA%B5%AC%ED%98%84-PARTGAN)
