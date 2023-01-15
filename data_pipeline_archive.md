@@ -41,7 +41,7 @@ def myImage(image_file_path):
 </ul>
 
 ```python
-# mnist처럼 numpy로 만들어서 하기. numpy로 안 바꾸고 바로 jpg로 하기
+# mnist처럼 numpy로 만들어서 하기, numpy로 안 바꾸고 바로 jpg로 하기
 
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
 train_ds = Dataset.from_tensor_slices((X_train, y_train))
