@@ -99,7 +99,7 @@ def load_model(model, model_path='saved_model/model.h5'):
 ```
 
 <ul>
-  <li><h3>훈련 정확도, 손실</h3></li>
+  <li><h3>훈련 정확도, 손실 </h3></li>
 </ul>
 
 ```python
