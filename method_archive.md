@@ -54,7 +54,7 @@ gan_model = get_gan_model(gen_model, d_model, L1_loss_lambda=100)
 
 
 <ul>
-  <li><h3>손실 그래프 생성</h3></li>
+  <li><h3>손실 그래프 생성</h3></li>   
 </ul>
 
 ```python
