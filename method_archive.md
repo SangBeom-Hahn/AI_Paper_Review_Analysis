@@ -275,6 +275,21 @@ def myImage(image_file_path):
 ```
 
 <ul>
+  <li><h3>넘파이 이미지 한 번에 resize하고 jpeg로 저장까지</h3></li>
+</ul>
+
+```python
+img_array.shape # (60000, 28, 28, 1)
+
+def image_resize(img_array):
+    for i in range(len(img_array)):
+      img_resize = cv2.resize(img_array[i], dsize = (256, 256))
+      img_resize = Image.fromarray(img_resize)
+      img_resize = img_resize.convert('RGB')
+      img_resize.save(f"{i}.jpeg")
+```
+
+<ul>
   <li><h3>train_X 시각화</h3></li>
 </ul>
 
