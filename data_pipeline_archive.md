@@ -37,7 +37,7 @@ def myImage(image_file_path):
 
 #### Image
 <ul>
-  <li><h3>mnist 예제 </h3></li>
+  <li><h3>In Memory 방식</h3></li>
 </ul>
 
 ```python
@@ -57,18 +57,15 @@ result = model.evaluate(test_ds)
 
 
 <ul>
-  <li><h3>이미지 분류 버전</h3></li>
+  <li><h3>Sequence Class 방식</h3></li>
 </ul>
 
 ```python
 studying...
 ```
 
-
-
-
 <ul>
-  <li><h3>pix2pix 버전</h3></li>
+  <li><h3>sketch2fashion tensorflow docs pix2pix 버전</h3></li>
 </ul>
 
 ```python
@@ -104,6 +101,9 @@ train_dataset = train_dataset.shuffle(BUFFER_SIZE)
 train_dataset = train_dataset.batch(BATCH_SIZE)
 ```
 
+<ul>
+  <li><h3>image dataset from directory</h3></li>
+</ul>
 
 
 #### Text
