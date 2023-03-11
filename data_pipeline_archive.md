@@ -161,6 +161,12 @@ model.fit(
   <li><h3>image dataset from directory</h3></li>
 </ul>
 
+```python
+Feeling Manager ipynb 참고
+```
+
+
+
 
 #### Text
 
