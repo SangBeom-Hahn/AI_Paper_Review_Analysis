@@ -55,17 +55,8 @@ model.fit(train_ds, epochs=3)
 result = model.evaluate(test_ds)
 ```
 
-
 <ul>
-  <li><h3>Sequence Class 방식</h3></li>
-</ul>
-
-```python
-studying...
-```
-
-<ul>
-  <li><h3>sketch2fashion tensorflow docs pix2pix 버전</h3></li>
+  <li><h3>tf.data pix2pix 버전(from tensor slice 버전)</h3></li>
 </ul>
 
 ```python
@@ -100,6 +91,64 @@ train_dataset = train_dataset.map(load_image_train,
 train_dataset = train_dataset.shuffle(BUFFER_SIZE)
 train_dataset = train_dataset.batch(BATCH_SIZE)
 ```
+
+<ul>
+  <li><h3>tf.data classification 버전(list_files 버전)</h3></li>
+</ul>
+
+```python
+# 전체 ds 불러오기
+list_ds = tf.data.Dataset.list_files(data_dir+'*/*', shuffle=False)
+list_ds = list_ds.shuffle(image_count, reshuffle_each_iteration=False)
+
+# 전체 ds의 클래스 가져오기
+class_names = np.array(sorted(os.listdir(data_dir)))
+
+# 전체 ds를 split하기
+val_size = int(image_count * 0.2)
+train_ds = list_ds.skip(val_size)
+val_ds = list_ds.take(val_size)
+
+# 이미지 경로를 받아서 클래스 반환
+def get_label(file_path):
+  # Convert the path to a list of path components
+  parts = tf.strings.split(file_path, os.path.sep)
+  # The second to last is the class-directory
+  one_hot = parts[-2] == class_names
+  # Integer encode the label
+  return tf.argmax(one_hot)
+  
+# 이미지 경로를 받아서 이미지와 라벨 반환
+def process_path(file_path):
+  label = get_label(file_path)
+  # Load the raw data from the file as a string
+  img = tf.io.read_file(file_path)
+  img = decode_img(img)
+  return img, label  
+  
+# Set `num_parallel_calls` so multiple images are loaded/processed in parallel.
+train_ds = train_ds.map(process_path, num_parallel_calls=tf.data.experimental.AUTOTUNE)
+val_ds = val_ds.map(process_path, num_parallel_calls=tf.data.experimental.AUTOTUNE)
+
+# 성능을 위해 잘 섞고 배치 처리
+def configure_for_performance(ds):
+  ds = ds.cache()
+  ds = ds.shuffle(buffer_size=1000)
+  ds = ds.batch(batch_size)
+  ds = ds.prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
+  return ds
+
+train_ds = configure_for_performance(train_ds)
+val_ds = configure_for_performance(val_ds)
+
+# 학습
+model.fit(
+  train_ds,
+  validation_data=val_ds,
+  epochs=3
+)
+```
+
 
 <ul>
   <li><h3>image dataset from directory</h3></li>
