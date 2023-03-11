@@ -117,7 +117,14 @@ def get_label(file_path):
   one_hot = parts[-2] == class_names
   # Integer encode the label
   return tf.argmax(one_hot)
-  
+
+# 이미지 resize 하는 util 함수
+def decode_img(img):
+  # Convert the compressed string to a 3D uint8 tensor
+  img = tf.io.decode_jpeg(img, channels=3)
+  # Resize the image to the desired size
+  return tf.image.resize(img, [img_height, img_width])
+
 # 이미지 경로를 받아서 이미지와 라벨 반환
 def process_path(file_path):
   label = get_label(file_path)
