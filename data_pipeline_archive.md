@@ -162,7 +162,7 @@ model.fit(
 </ul>
 
 ```python
-Feeling Manager ipynb 참고
+Feeling train_with_tf_data_api.py 참고
 ```
 
 
