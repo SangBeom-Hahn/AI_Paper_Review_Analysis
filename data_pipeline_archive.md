@@ -64,6 +64,8 @@ result = model.evaluate(test_ds)
 # pix2pix라서 이미지 pair 필요
 real_path = "/content/trainB/"
 input_path = "/content/trainA/"
+test_input_path_name = './testA/*.jpg' 
+test_real_path_name = './testB/*.jpg' 
 
 
 def load_image_train(input_path, real_path):
@@ -86,10 +88,15 @@ def load(input_file, real_file): # real이 오른쪽
   
   
 # 데이터 셋 객체 생성
+train_dataset = tf.data.Dataset.from_tensor_slices((glob.glob(input_path_name), glob.glob(real_path_name)))
 train_dataset = train_dataset.map(load_image_train,
                                   num_parallel_calls=tf.data.experimental.AUTOTUNE)
 train_dataset = train_dataset.shuffle(BUFFER_SIZE)
 train_dataset = train_dataset.batch(BATCH_SIZE)
+
+test_dataset = tf.data.Dataset.from_tensor_slices((glob.glob(test_input_path_name), glob.glob(test_real_path_name)))
+test_dataset = test_dataset.map(load_image_test)
+test_dataset = test_dataset.batch(BATCH_SIZE)
 ```
 
 <ul>
