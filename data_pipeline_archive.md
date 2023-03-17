@@ -1,7 +1,7 @@
 # 나만의 데이터 셋 만들기 (이미지, 텍스트)
 
 
-## 1. mnist처럼 ndarray로 만들고 fit 
+## 1. mnist처럼 ndarray로 만들고 fit    
 <ul>
   <li><h3>이미지</h3></li>
 </ul>
