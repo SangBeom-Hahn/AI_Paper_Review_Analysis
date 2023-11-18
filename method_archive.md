@@ -1,3 +1,213 @@
+# PyTroch
+
+<ul>
+  <li><h3>필수 모듈</h3></li>
+</ul>
+
+```python
+import os
+import shutil
+import zipfile
+import warnings
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import torchvision.transforms as transforms
+from torchsummary import summary
+from os import walk
+from PIL import Image
+from torchvision import datasets
+from torchvision import models
+
+warnings.filterwarnings("ignore")
+```
+
+<ul>
+  <li><h3>모델 직접 구현</h3></li>
+</ul>
+
+```python
+class MyModel(nn.Module):
+  def __init__(self):
+    super().__init__()
+
+    self.layer1 = nn.Sequential(
+        nn.Conv2d(3, 16, kernel_size = 3, stride = 2, padding = 0),
+        nn.BatchNorm2d(16),
+        nn.ReLU(),
+        nn.MaxPool2d(kernel_size = 2, stride = 2)
+    )
+
+    self.layer2 = nn.Sequential(
+        nn.Conv2d(16, 32, kernel_size = 3, stride = 2, padding = 0),
+        nn.BatchNorm2d(32),
+        nn.ReLU(),
+        nn.MaxPool2d(kernel_size = 2, stride = 2)
+    )
+
+    self.layer3 = nn.Sequential(
+        nn.Conv2d(32, 64, kernel_size = 3, stride = 2, padding = 0),
+        nn.BatchNorm2d(64),
+        nn.ReLU(),
+        nn.MaxPool2d(kernel_size = 2, stride = 2)
+    )
+
+    self.drop_out = nn.Dropout(0.5)
+
+    self.fc1 = nn.Linear(3 * 3 * 64, 1000)
+    self.fc2 = nn.Linear(1000, 1)
+
+  def forward(self, x):
+    out = self.layer1(x)
+    out = self.layer2(out)
+    out = self.layer3(out)
+
+    out = out.view(out.size(0), -1)
+    out = self.drop_out(out)
+    out = self.fc1(out)
+    out = self.fc2(out)
+    return out
+```
+
+<ul>
+  <li><h3>학습 프로세스</h3></li>
+</ul>
+
+
+```python
+# 모델을 평가 모드로 설정합니다. (드롭아웃 및 배치 정규화를 비활성화)
+model.eval()
+
+# 이 위에 데이터 셋 구성이 필요함
+dataloader = torch.utils.data.DataLoader(dataset,
+                                         batch_size=8,
+                                         shuffle=True,
+                                         num_workers=8)
+
+# 이진 분류 정확도를 계산하는 함수입니다.
+def binary_acc(y_pred, y_test):
+    y_pred_tag = torch.round(torch.sigmoid(y_pred))
+    correct_results_sum = (y_pred_tag == y_test).sum().float()
+    acc = correct_results_sum/y_test.shape[0]
+    acc = torch.round(acc * 100)
+    return acc
+
+# 학습 설정값을 지정합니다.
+EPOCHS = 100
+BATCH_SIZE = 64
+LEARNING_RATE = 0.1
+
+model.to(device)
+criti = nn.BCEWithLogitsLoss()
+opt = optim.Adam(model.parameters(), lr = LEARNING_RATE)
+
+for epoch in range(1, EPOCHS+1):
+  epoch_loss = 0
+  epoch_acc = 0
+
+  for X_batch, y_batch in dataloader:
+    X_batch, y_batch = X_batch.to(device), y_batch.to(device).type(torch.cuda.FloatTensor)
+
+    opt.zero_grad()
+    y_pred = model(X_batch)
+
+    loss = criti(y_pred, y_batch.unsqueeze(1)) # y를 1행 n열이 아닌 n행 1열로 만듬 (n, )가 (n, 1)로 됨
+    acc = binary_acc(y_pred, y_batch.unsqueeze(1))
+
+    loss.backward()
+    opt.step()
+
+    epoch_loss += loss.item() # tensor([3]) 텐서에서 값(3)만 가져오기
+    epoch_acc += acc.item()
+
+    torch.save({
+        'epoch': epoch,
+        'model_state_dict': model.state_dict(),
+        'optimizer_state_dict': opt.state_dict(),
+        'loss': epoch_loss,
+        }, f"{PATH}/checkpoint_model_{epoch}_{epoch_loss/len(dataloader)}_{epoch_acc/len(dataloader)}.pt")
+
+    # 에폭별 손실과 정확도를 출력합니다.
+    print(f'Epoch {epoch+0:03}: | Loss: {epoch_loss/len(dataloader):.5f} | Acc: {epoch_acc/len(dataloader):.3f}')
+```
+
+<ul>
+  <li><h3>모델 저장 및 로드</h3></li>
+</ul>
+
+
+```python
+PATH = "saved"
+
+if(not os.path.exists(PATH)):
+  os.makedirs(PATH)
+
+# 1. 가중치만 저장
+torch.save(model.state_dict(), os.path.join(PATH, "model.pt"))
+
+# 로드
+new_model = MyModel()
+new_model.load_state_dict(torch.load(os.path.join(PATH, "model.pt")))
+
+# 2. 전체 모델을 파일로 저장합니다.
+torch.save(model, os.path.join(PATH, "model_pickle.pt"))
+
+# 저장된 전체 모델을 불러옵니다.
+model = torch.load(os.path.join(PATH, "model_pickle.pt"))
+
+# 3. 가중치 파일 로드
+checkpoint = torch.load(PATH)
+model.load_state_dict(checkpoint["model_state_dict"])
+opt.load_state_dict(checkpoint["optimizer_state_dict"])
+epoch = checkpoint("epoch")
+```
+
+<ul>
+  <li><h3>전이 학습 구현</h3></li>
+</ul>
+
+
+```python
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+vgg = models.vgg16(pretrained = True).to(device)
+
+# 모델의 모듈 바꿀 수 있음(안 바꾸는 게 좋음)
+for name, layer in vgg.named_modules():
+  print(name, layer)
+
+# vgg.fc = torch.nn.Linear(1000, 1)
+# vgg.classifier._modules['6'] = torch.nn.Linear(4096, 1)
+
+import torch.nn as nn
+
+class MyVgg(nn.Module):
+  def __init__(self):
+    super().__init__()
+    self.vgg19 = models.vgg19(pretrained = True)
+    self.linear_layers = nn.Linear(1000, 1)
+
+  def forward(self, x):
+    x = self.vgg19(x)
+    return self.linear_layers(x)
+
+myVgg = MyVgg()
+
+# freeze 전이 학습
+for param in myVgg.parameters():
+  param.requires_grad = False
+
+for param in myVgg.linear_layers.parameters()  :
+  param.requires_grad = True
+
+dataloader = torch.utils.data.DataLoader(dataset,
+                                         batch_size = BATCH_SIZE,
+                                         shuffle = True,
+                                         num_workers = 8)
+
+for epoch in range(1, EPOCHS+1):
+  # ~~
+```
+
 ## 공통
 
 <ul>
