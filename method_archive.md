@@ -1,5 +1,17 @@
 # PyTroch
 
+<!-- 이거 쓰삼
+<ul>
+  <li><h3>데이터 로더 배치 크기만큼 그리드 출력</h3></li>
+</ul>
+
+```python
+
+```
+-->
+
+## 모델 생성 및 학습 흐름
+
 <ul>
   <li><h3>필수 모듈</h3></li>
 </ul>
@@ -207,6 +219,24 @@ dataloader = torch.utils.data.DataLoader(dataset,
 for epoch in range(1, EPOCHS+1):
   # ~~
 ```
+
+## 유용한 함수
+<ul>
+  <li><h3>데이터 로더 배치 크기만큼 그리드 출력</h3></li>
+</ul>
+
+```python
+# 무작위 학습 이미지 몇 개 선택
+dataiter = iter(trainloader)
+images, labels = next(iter(dataiter))
+
+# 이미지 그리드 생성
+img_grid = torchvision.utils.make_grid(images)
+
+# 이미지 출력
+matplotlib_imshow(img_grid, one_channel=True)
+```
+
 
 ## 공통
 
