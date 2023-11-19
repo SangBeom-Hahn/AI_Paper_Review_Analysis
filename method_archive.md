@@ -88,14 +88,13 @@ class MyModel(nn.Module):
 
 
 ```python
-# 모델을 평가 모드로 설정합니다. (드롭아웃 및 배치 정규화를 비활성화)
-model.eval()
+# 데이터 셋 구성(train, test)가 다른 데이터 셋
+mnist_train = torchvision.datasets.MNIST(root='./mnist', train=True, download=True)
+mnist_test = torchvision.datasets.MNIST(root='./mnist', train=False, download=True)
 
 # 이 위에 데이터 셋 구성이 필요함
-dataloader = torch.utils.data.DataLoader(dataset,
-                                         batch_size=8,
-                                         shuffle=True,
-                                         num_workers=8)
+mnist_train_dataloader = torch.utils.data.DataLoader(mnist_train_transformed, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
+mnist_test_dataloader = torch.utils.data.DataLoader(mnist_test_transformed, batch_size=BATCH_SIZE, shuffle=False, num_workers=2)
 
 # 이진 분류 정확도를 계산하는 함수입니다.
 def binary_acc(y_pred, y_test):
@@ -117,11 +116,14 @@ opt = optim.Adam(model.parameters(), lr = LEARNING_RATE)
 for epoch in range(1, EPOCHS+1):
   epoch_loss = 0
   epoch_acc = 0
+  # 네트워크 모델을 train 모드로 두어 gradient을 계산하고, 여러 sub module (배치 정규화, 드롭아웃 등)이 train mode로 작동할 수 있도록 함
+  model.train() 
 
   for X_batch, y_batch in dataloader:
     X_batch, y_batch = X_batch.to(device), y_batch.to(device).type(torch.cuda.FloatTensor)
 
     opt.zero_grad()
+    
     y_pred = model(X_batch)
 
     loss = criti(y_pred, y_batch.unsqueeze(1)) # y를 1행 n열이 아닌 n행 1열로 만듬 (n, )가 (n, 1)로 됨
@@ -173,6 +175,9 @@ checkpoint = torch.load(PATH)
 model.load_state_dict(checkpoint["model_state_dict"])
 opt.load_state_dict(checkpoint["optimizer_state_dict"])
 epoch = checkpoint("epoch")
+
+# 학습이 완료된 모델은 네트워크 모델을 eval 모드로 두어 여러 sub module들이 eval mode로 작동할 수 있게 함
+model.eval()
 ```
 
 <ul>
@@ -197,7 +202,11 @@ class MyVgg(nn.Module):
   def __init__(self):
     super().__init__()
     self.vgg19 = models.vgg19(pretrained = True)
-    self.linear_layers = nn.Linear(1000, 1)
+    self.linear_layers = nn.Linear(1000, 1, bias = True)
+    nn.init.xavier_uniform_(self.linear_layers.weight)
+    # bias를 초기화
+    stdv = 1. / math.sqrt(self.linear_layers.weight.size(1))
+    self.linear_layers.bias.data.uniform_(-stdv, stdv)
 
   def forward(self, x):
     x = self.vgg19(x)
