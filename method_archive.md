@@ -44,6 +44,7 @@ class MyModel(nn.Module):
     super().__init__()
 
     self.layer1 = nn.Sequential(
+        # 입력 이미지 차원(흑백 : 1/ 컬럼 : 3)/ 커널 개수(conv와 batch가 개수가 같음)
         nn.Conv2d(3, 16, kernel_size = 3, stride = 2, padding = 0),
         nn.BatchNorm2d(16),
         nn.ReLU(),
