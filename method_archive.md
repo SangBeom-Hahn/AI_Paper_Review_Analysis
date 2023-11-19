@@ -247,6 +247,24 @@ img_grid = torchvision.utils.make_grid(images)
 matplotlib_imshow(img_grid, one_channel=True)
 ```
 
+<ul>
+  <li><h3>이미지가 흑백 1일 때 모델이 3이면 </h3></li>
+</ul>
+
+```python
+# 데이터를 3으로 변환
+common_transform = torchvision.transforms.Compose(
+  [
+    torchvision.transforms.Grayscale(num_output_channels=3), # grayscale의 1채널 영상을 3채널로 동일한 값으로 확장함
+    torchvision.transforms.ToTensor() # PIL Image를 Tensor type로 변경함
+  ]
+)
+```
+
+```python
+# 모델을 1로 변환
+target_model.conv1 = torch.nn.Conv2d(FASHION_INPUT_NUM, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+```
 
 ## 공통
 
