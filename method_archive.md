@@ -266,6 +266,20 @@ common_transform = torchvision.transforms.Compose(
 target_model.conv1 = torch.nn.Conv2d(FASHION_INPUT_NUM, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
 ```
 
+<ul>
+  <li><h3>토치 서머리</h3></li>
+</ul>
+
+```python
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+# 사전 학습된 VGG16 모델을 불러옵니다.
+imagenet_resnet18 = torchvision.models.resnet18(pretrained=True).to(device)
+# 모델의 구조 및 파라미터 요약 출력
+summary(imagenet_resnet18, (3, 224, 224))
+```
+
+
 ## 공통
 
 <ul>
