@@ -280,6 +280,38 @@ imagenet_resnet18 = torchvision.models.resnet18(pretrained=True).to(device)
 summary(imagenet_resnet18, (3, 224, 224))
 ```
 
+## 데이터 파이프 라인
+
+<ul>
+  <li><h3>모델에 x 딱 하나 테스트로 넣기</h3></li>
+</ul>
+
+```python
+# mnist 모델에 넣을 784 차원 데이터 1개 준비
+x_numpy = np.random.rand(1,784)
+
+# 토치는 모델을 이용하려면 무조건 토치 타입으로 바꿔야 하고 cpu든 gpu등 장치를 지정해야 한다.
+# to. 안하면 RuntimeError: Expected all tensors to be on the same device, 발생
+x_torch = torch.from_numpy(x_numpy).float().to(device)
+
+y_torch = M(x_torch) # 10 차원 데이터 반환
+
+''' 거짓
+# 텐서를 넘파이로 바꾸기
+# 넘파이는 또 cpu를 먹어서 
+# TypeError: can't convert cuda:0 device type tensor to numpy. Use Tensor.cpu() 발생
+y_torch.numpy()
+
+# req_grad를 없애기 위해 detach로 없애라고 함
+# detach() method는 gradient의 전파를 멈추는 역할을 한다. 이런 것이 다 추론 시 메모리를 위한 최적화
+# RuntimeError: Use tensor.detach().numpy() instead. 발생
+y_torch.cpu().numpy()
+'''
+
+# 진실 코드
+y_numpy = y_torch.detach().cpu().numpy()
+```
+
 
 ## 공통
 
