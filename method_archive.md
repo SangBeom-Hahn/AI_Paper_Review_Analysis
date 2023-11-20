@@ -111,6 +111,7 @@ LEARNING_RATE = 0.1
 
 model.to(device)
 criti = nn.BCEWithLogitsLoss()
+# 옵티마이저를 어떤 파라미터에 대해 할 것인지
 opt = optim.Adam(model.parameters(), lr = LEARNING_RATE)
 
 for epoch in range(1, EPOCHS+1):
