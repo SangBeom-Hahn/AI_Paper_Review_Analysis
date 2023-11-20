@@ -292,6 +292,7 @@ x_numpy = np.random.rand(1,784)
 
 # 토치는 모델을 이용하려면 무조건 토치 타입으로 바꿔야 하고 cpu든 gpu등 장치를 지정해야 한다.
 # to. 안하면 RuntimeError: Expected all tensors to be on the same device, 발생
+# 토치에서 데이터 x, y에는 device를 무조건 연결해줘야 한다.
 x_torch = torch.from_numpy(x_numpy).float().to(device)
 
 y_torch = M(x_torch) # 10 차원 데이터 반환
