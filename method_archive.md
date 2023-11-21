@@ -104,6 +104,25 @@ def binary_acc(y_pred, y_test):
     acc = torch.round(acc * 100)
     return acc
 
+'''
+진짜 eval func는 이렇게 작성되는데 시작할 때 eval, 끝에 train
+
+def func_eval(model,data_iter,device):
+    with torch.no_grad():
+        n_total,n_correct = 0,0
+        model.eval() # evaluate (affects DropOut and BN)
+        for batch_in,batch_out in data_iter:
+            y_trgt = batch_out.to(device)
+            model_pred = model(batch_in.view(-1,1,28,28).to(device))
+            _,y_pred = torch.max(model_pred.data,1)
+            n_correct += (y_pred==y_trgt).sum().item()
+            n_total += batch_in.size(0)
+        val_accr = (n_correct/n_total)
+        model.train() # back to train mode
+    return val_accr
+print ("Done")
+'''
+
 # 학습 설정값을 지정합니다.
 EPOCHS = 100
 BATCH_SIZE = 64
@@ -145,6 +164,13 @@ for epoch in range(1, EPOCHS+1):
 
     # 에폭별 손실과 정확도를 출력합니다.
     print(f'Epoch {epoch+0:03}: | Loss: {epoch_loss/len(dataloader):.5f} | Acc: {epoch_acc/len(dataloader):.3f}')
+
+
+# 테스트는 아직 미완성
+with torch.no_grad():
+    C.eval() # 평가 모드로 바꾸기
+    y_pred = C.forward(test_x.view(-1,1,28,28).type(torch.float).to(device)/255.)
+y_pred = y_pred.argmax(axis=1)
 ```
 
 <ul>
