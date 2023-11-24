@@ -39,6 +39,8 @@ warnings.filterwarnings("ignore")
 </ul>
 
 ```python
+#  이미지 분류 모델 구조는 VIT를 보는 게 최고다.
+
 class MyModel(nn.Module):
   def __init__(self):
     super().__init__()
