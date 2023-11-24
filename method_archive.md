@@ -39,7 +39,7 @@ warnings.filterwarnings("ignore")
 </ul>
 
 ```python
-class MyModel(nn.Module): #  이미지 분류 모델 구조는 VIT를 보는 게 최고다.
+class MyModel(nn.Module): #  이미지 분류 모델 구조는 VIT를 보는 게 최고다. 각종 기술이 들어있다. CNN과 트랜스포머 중 어떤 것을 쓸지 혼합할 지 고민해라
   def __init__(self):
     super().__init__()
 
