@@ -68,7 +68,7 @@ class MyModel(nn.Module):
 
     self.drop_out = nn.Dropout(0.5)
 
-    self.fc1 = nn.Linear(3 * 3 * 64, 1000)
+    self.fc1 = nn.Linear(3 * 3 * 64, 1000, bias = True)
     self.fc2 = nn.Linear(1000, 1)
 
   def forward(self, x):
