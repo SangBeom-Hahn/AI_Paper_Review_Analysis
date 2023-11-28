@@ -105,9 +105,9 @@ class ConvolutionalNeuralNetworkClass(nn.Module):
         self.USE_BATCHNORM = USE_BATCHNORM
 
         # Convolutional layers
-        self.layers = []
-        prev_cdim = self.xdim[0]
-        for cdim in self.cdims: # for each hidden layer
+        self.layers = [] # 모든 레이어를 리스트에 모으고 나중에 Sequential에 넣을 것이다.
+        prev_cdim = self.xdim[0] # 최초 입력 이미지 차원 초기화
+        for cdim in self.cdims: # cnn 출력 채널 수 [32,64]만큼 for문 수행
             self.layers.append(
                 nn.Conv2d(
                     # FILL IN HERE
@@ -118,16 +118,18 @@ class ConvolutionalNeuralNetworkClass(nn.Module):
                     padding = self.ksize//2
                 ) # convlution
             )
+
             if self.USE_BATCHNORM:
                 self.layers.append(nn.BatchNorm2d(cdim)) # batch-norm
-            self.layers.append(nn.ReLU(True))  # activation
+
+            self.layers.append(nn.ReLU(True))  # activation # conv 레이어 밑에 하나하나 렐루 등을 붙임
             self.layers.append(nn.MaxPool2d(kernel_size=(2,2), stride=(2,2))) # max-pooling
             self.layers.append(nn.Dropout2d(p=0.5))  # dropout
-            prev_cdim = cdim
+            prev_cdim = cdim # for문 한번 끝나면 새로운 conv를 만들텐데 새로운 conv의 입력을 이전 conv의 출력 차원과 맞춤
 
         # Dense layers
         self.layers.append(nn.Flatten())
-        prev_hdim = prev_cdim*(self.xdim[1]//(2**len(self.cdims)))*(self.xdim[2]//(2**len(self.cdims)))
+        prev_hdim = prev_cdim*(self.xdim[1]//(2**len(self.cdims)))*(self.xdim[2]//(2**len(self.cdims))) # conv의 출력과 dens의 입력을 맞춤
         for hdim in self.hdims:
             self.layers.append(nn.Linear(
                 # FILL IN HERE
@@ -140,7 +142,8 @@ class ConvolutionalNeuralNetworkClass(nn.Module):
         # Final layer (without activation)
         self.layers.append(nn.Linear(prev_hdim,self.ydim,bias=True))
 
-        # Concatenate all layers
+
+        # Concatenate all layers #
         self.net = nn.Sequential()
         for l_idx,layer in enumerate(self.layers):
             layer_name = "%s_%02d"%(type(layer).__name__.lower(),l_idx)
@@ -165,9 +168,6 @@ class ConvolutionalNeuralNetworkClass(nn.Module):
 C = ConvolutionalNeuralNetworkClass(
     name='cnn',xdim=[1,28,28],ksize=3,cdims=[32,64],
     hdims=[32],ydim=10).to(device)
-loss = nn.CrossEntropyLoss()
-optm = optim.Adam(C.parameters(),lr=1e-3)
-print ("Done.")
 ```
 
 <ul>
