@@ -401,7 +401,7 @@ summary(imagenet_resnet18, (3, 224, 224))
 ## 데이터 파이프 라인
 
 <ul>
-  <li><h3>모델에 x 딱 하나 테스트로 넣기</h3></li>
+  <li><h3>모델에 random x 딱 하나 테스트로 넣기</h3></li>
 </ul>
 
 ```python
@@ -429,6 +429,21 @@ y_torch.cpu().numpy()
 
 # 진실 코드
 y_numpy = y_torch.detach().cpu().numpy()
+```
+
+<ul>
+  <li><h3>모델에 데이터 배치 x 딱 하나 Dataset에서 꺼내서 테스트로 넣기</h3></li>
+</ul>
+
+```python
+# ✅ 입력 shape 테스트
+qd_train_dataset = QuickDrawDataset(train_data, train_label, transform)
+x_data = next(iter(qd_train_dataset))[0]
+y_data = next(iter(qd_train_dataset))[1]
+
+c = 모델(in_channels = 3, out_channels = 64)
+y_pred = c(x_torch)
+y_pred
 ```
 
 
