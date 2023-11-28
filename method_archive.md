@@ -89,6 +89,7 @@ class MyModel(nn.Module):
 
 
 ```python
+# 파이토치 과제 2 데이터 로더 참고
 # 데이터 셋 구성(train, test)가 다른 데이터 셋
 mnist_train = torchvision.datasets.MNIST(root='./mnist', train=True, download=True)
 mnist_test = torchvision.datasets.MNIST(root='./mnist', train=False, download=True)
@@ -97,6 +98,7 @@ mnist_test = torchvision.datasets.MNIST(root='./mnist', train=False, download=Tr
 mnist_train_dataloader = torch.utils.data.DataLoader(mnist_train_transformed, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
 mnist_test_dataloader = torch.utils.data.DataLoader(mnist_test_transformed, batch_size=BATCH_SIZE, shuffle=False, num_workers=2)
 
+# 토치 따라치기 2 데이터 로더 참고
 # 이진 분류 정확도를 계산하는 함수입니다.
 def binary_acc(y_pred, y_test):
     y_pred_tag = torch.round(torch.sigmoid(y_pred))
@@ -125,6 +127,7 @@ print ("Done")
 '''
 
 # 학습 설정값을 지정합니다.
+# 
 EPOCHS = 100
 BATCH_SIZE = 64
 LEARNING_RATE = 0.1
@@ -214,6 +217,7 @@ model.eval()
 
 
 ```python
+# 파이토치 심화 과제 1 참고
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 vgg = models.vgg16(pretrained = True).to(device)
 
