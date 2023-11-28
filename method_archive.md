@@ -89,7 +89,7 @@ class MyModel(nn.Module):
 
 
 ```python
-# 파이토치 과제 2 데이터 로더 참고
+# 파이토치 과제 2 데이터 로더, cv 이론 기본 과제 1 참고
 # 데이터 셋 구성(train, test)가 다른 데이터 셋
 mnist_train = torchvision.datasets.MNIST(root='./mnist', train=True, download=True)
 mnist_test = torchvision.datasets.MNIST(root='./mnist', train=False, download=True)
