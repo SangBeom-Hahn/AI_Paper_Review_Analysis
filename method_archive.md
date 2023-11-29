@@ -436,13 +436,12 @@ y_numpy = y_torch.detach().cpu().numpy()
 </ul>
 
 ```python
-# ✅ 입력 shape 테스트
 qd_train_dataset = QuickDrawDataset(train_data, train_label, transform)
-x_data = next(iter(qd_train_dataset))[0]
+x_data = next(iter(qd_train_dataset))[0].squeeze(0) # 배치 1 만들어줘야 함
 y_data = next(iter(qd_train_dataset))[1]
 
 c = 모델(in_channels = 3, out_channels = 64)
-y_pred = c(x_torch)
+y_pred = c(x_data)
 y_pred
 ```
 
