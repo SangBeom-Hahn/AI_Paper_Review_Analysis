@@ -176,14 +176,12 @@ C = ConvolutionalNeuralNetworkClass(
 
 
 ```python
-# 파이토치 과제 2 데이터 로더, cv 이론 기본 과제 1,  참고 -> 좀 하나로 만들어서 토치 탬플릿에 적용
 # 데이터 셋 구성(train, test)가 다른 데이터 셋
-mnist_train = torchvision.datasets.MNIST(root='./mnist', train=True, download=True)
-mnist_test = torchvision.datasets.MNIST(root='./mnist', train=False, download=True)
+train_dataset = (데이터 로더 활용 블로그)
+test_dataset = (데이터 로더 활용 블로그)
 
-# 이 위에 데이터 셋 구성이 필요함
-mnist_train_dataloader = torch.utils.data.DataLoader(mnist_train_transformed, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
-mnist_test_dataloader = torch.utils.data.DataLoader(mnist_test_transformed, batch_size=BATCH_SIZE, shuffle=False, num_workers=2)
+train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
+test_dataloader = torch.utils.data.DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2)
 
 # 토치 따라치기 2 데이터 로더, cv 이론 기본 과제 1 참고
 # 이진 분류 정확도를 계산하는 함수입니다.
