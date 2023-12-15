@@ -177,22 +177,12 @@ C = ConvolutionalNeuralNetworkClass(
 
 ```python
 # 데이터 셋 구성(train, test)가 다른 데이터 셋
-train_dataset = (데이터 로더 활용 블로그)
-test_dataset = (데이터 로더 활용 블로그)
+train_dataset = (데이터 로더 활용 블로그 참고)
+test_dataset = (")
 
 train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
 test_dataloader = torch.utils.data.DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2)
 
-# 토치 따라치기 2 데이터 로더, cv 이론 기본 과제 1 참고
-# 이진 분류 정확도를 계산하는 함수입니다.
-def binary_acc(y_pred, y_test):
-    y_pred_tag = torch.round(torch.sigmoid(y_pred))
-    correct_results_sum = (y_pred_tag == y_test).sum().float()
-    acc = correct_results_sum/y_test.shape[0]
-    acc = torch.round(acc * 100)
-    return acc
-
-'''
 ML basic 따라치기 2 참고
 검증 메서드 시작할 때 eval, 끝에 train
 
