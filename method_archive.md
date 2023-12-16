@@ -13,33 +13,11 @@
 ## 모델 생성 및 학습 흐름
 
 <ul>
-  <li><h3>필수 모듈</h3></li>
-</ul>
-
-```python
-import os
-import shutil
-import zipfile
-import warnings
-import torch
-import torch.nn as nn
-import torch.optim as optim
-import torchvision.transforms as transforms
-from torchsummary import summary
-from os import walk
-from PIL import Image
-from torchvision import datasets
-from torchvision import models
-
-warnings.filterwarnings("ignore")
-```
-
-<ul>
   <li><h3>모델 직접 구현</h3></li>
 </ul>
 
 ```python
-#  이미지 분류 모델 구조는 VIT를 보는 게 최고다. 각종 기술이 들어있다. CNN과 트랜스포머 중 어떤 것을 쓸지 혼합할 지 고민해라
+# CNN과 트랜스포머 중 어떤 것을 쓸지 혼합할 지 고민해라
 class MyModel(nn.Module): 
   def __init__(self):
     super().__init__()
@@ -183,27 +161,7 @@ test_dataset = (")
 train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
 test_dataloader = torch.utils.data.DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2)
 
-ML basic 따라치기 2 참고
-검증 메서드 시작할 때 eval, 끝에 train
-
-def func_eval(model,data_iter,device):
-    with torch.no_grad():
-        n_total,n_correct = 0,0
-        model.eval() # evaluate (affects DropOut and BN)
-        for batch_in,batch_out in data_iter:
-            y_trgt = batch_out.to(device)
-            model_pred = model(batch_in.view(-1,1,28,28).to(device))
-            _,y_pred = torch.max(model_pred.data,1)
-            n_correct += (y_pred==y_trgt).sum().item()
-            n_total += batch_in.size(0)
-        val_accr = (n_correct/n_total)
-        model.train() # back to train mode
-    return val_accr
-print ("Done")
-'''
-
 # 학습 설정값을 지정합니다.
-# 
 EPOCHS = 100
 BATCH_SIZE = 64
 LEARNING_RATE = 0.1
@@ -213,6 +171,8 @@ criti = nn.BCEWithLogitsLoss()
 # 옵티마이저를 어떤 파라미터에 대해 할 것인지
 opt = optim.Adam(model.parameters(), lr = LEARNING_RATE)
 
+# 간단하게 : 아래 코드, ML basic 따라치기 2 참고
+# 깊게 : 파탬 참고
 for epoch in range(1, EPOCHS+1):
   epoch_loss = 0
   epoch_acc = 0
