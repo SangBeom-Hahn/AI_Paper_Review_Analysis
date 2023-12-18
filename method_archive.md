@@ -155,7 +155,7 @@ C = ConvolutionalNeuralNetworkClass(
 
 ```python
 # 데이터 셋 구성(train, test)가 다른 데이터 셋
-train_dataset = (데이터 로더 활용 블로그 참고)
+train_dataset = (데이터 로더 활용 블로그, 레벨 1 커스텀 데이터 셋 참고)
 test_dataset = (")
 
 train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
