@@ -347,6 +347,43 @@ imagenet_resnet18 = torchvision.models.resnet18(pretrained=True).to(device)
 summary(imagenet_resnet18, (3, 224, 224))
 ```
 
+<ul>
+  <li><h3>파이썬 Enum</h3></li>
+</ul>
+
+```python
+class Age(int, Enum):
+    """Enum 클래스 -> enum만 모아두자"""
+    
+    YOUNG = 0
+    MIDDLE = 1
+    OLD = 2
+    
+    @classmethod
+    def _label_ages(cls, ages):
+        if(ages < 30):
+            return cls.YOUNG
+        elif(ages < 60):
+            return cls.MIDDLE
+        else:
+            return cls.OLD
+```
+
+<ul>
+  <li><h3>데이터 로더 배치 크기만큼 그리드 출력</h3></li>
+</ul>
+
+```python
+# dic로 더미화
+def _convert_class_to_numeric(self, class_array):
+    class_to_number = {class_value : idx for idx, class_value in enumerate(np.unique(class_array))}
+    return np.vectorize(class_to_number.get)(class_array)
+
+# if문으로 더미화
+def _convert_age_to_dummy(self, ages):
+    return np.vectorize(Age._label_ages)(ages)
+```
+
 ## 데이터 파이프 라인
 
 <ul>
