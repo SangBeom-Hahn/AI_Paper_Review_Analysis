@@ -158,6 +158,7 @@ C = ConvolutionalNeuralNetworkClass(
 train_dataset = (데이터 로더 활용 블로그, 레벨 1 커스텀 데이터 셋 참고)
 test_dataset = (")
 
+# 데이터 셋 : https://github.com/visionhong/Vision/blob/master/Basics/rand_augment/data.py
 train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
 test_dataloader = torch.utils.data.DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2)
 
