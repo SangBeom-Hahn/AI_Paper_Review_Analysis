@@ -206,7 +206,7 @@ for epoch in range(1, EPOCHS+1):
     print(f'Epoch {epoch+0:03}: | Loss: {epoch_loss/len(dataloader):.5f} | Acc: {epoch_acc/len(dataloader):.3f}')
 
 
-# 테스트는 아직 미완성
+# 테스트는 아직 미완성 -> 레벨 1 플젝 보고 하기
 with torch.no_grad():
     C.eval() # 평가 모드로 바꾸기
     y_pred = C.forward(test_x.view(-1,1,28,28).type(torch.float).to(device)/255.)
