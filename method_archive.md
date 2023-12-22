@@ -300,6 +300,39 @@ for epoch in range(1, EPOCHS+1):
 
 ## 유용한 함수
 <ul>
+  <li><h3>가중치 샘플러</h3></li>
+</ul>
+
+```python
+# 데이터 셋 클래스 네부에 y를 Counter 돌려서 분포 확인하는 메서드
+def target_class_distribution(self):
+    target_dist = Counter(self.y)
+    return target_dist, self.y
+
+# 전체 데이터 셋
+target_dist, y_train = train_dataset.target_class_distribution()
+sort_target_dist = sorted(target_dist.items(), key = lambda x:x[0])
+num_samples = len(train_dataset)
+class_weights = [num_samples / sort_target_dist[i][1] for i in range(len(sort_target_dist))]
+weights = [class_weights[y_train[i]] for i in range(num_samples)] # 해당 레이블마다의 가중치 비율
+sampler = WeightedRandomSampler(torch.DoubleTensor(weights), int(15120))
+
+# spilt 한 경우
+train_set, val_set = 데이터 셋 분리 상태
+_, multi_class_labels = train_dataset.target_class_distribution()
+multi_class_labels = np.array(multi_class_labels)
+# 이건 분리한 셋이 Subset 타입일 경우 원본에서의 인덱스 반환 가능하다는 예시
+train_set_y = multi_class_labels[train_set.indices]
+target_dist = Counter(train_set_y)
+sort_target_dist = sorted(target_dist.items(), key = lambda x:x[0])
+num_samples = len(train_set_y)
+class_weights = [num_samples / sort_target_dist[i][1] for i in range(len(sort_target_dist))]
+
+weights = [class_weights[train_set_y[i]] for i in range(int(num_samples))] #해당 레이블마다의 가중치 비율
+train_sampler = WeightedRandomSampler(torch.DoubleTensor(weights), int(num_samples))
+```
+
+<ul>
   <li><h3>클래스 별 Grayscale 그래프</h3></li>
 </ul>
 
