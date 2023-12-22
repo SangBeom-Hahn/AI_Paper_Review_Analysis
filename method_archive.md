@@ -300,6 +300,25 @@ for epoch in range(1, EPOCHS+1):
 
 ## 유용한 함수
 <ul>
+  <li><h3>클래스 별 Grayscale 그래프</h3></li>
+</ul>
+
+```python
+# 기초 플젝 따라치기 EDA 
+plt.figure()
+plt.subplot(111)
+
+for class_id in num2class:
+    img = np.array(Image.open(os.path.join(cfg.img_dir, img_id, class_id+ext)).convert('L'))
+    histogram, bin_edges = np.histogram(img, bins=256, range=(0, 255))
+    sns.lineplot(data=histogram)
+
+plt.legend(num2class)
+plt.title('Class Grayscale Histogram Plot', fontsize=15)
+plt.show()
+```
+
+<ul>
   <li><h3>데이터 로더 배치 크기만큼 그리드 출력</h3></li>
 </ul>
 
