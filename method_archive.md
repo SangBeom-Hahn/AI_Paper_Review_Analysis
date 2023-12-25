@@ -182,7 +182,7 @@ for epoch in range(1, EPOCHS+1):
   for X_batch, y_batch in dataloader:
     X_batch, y_batch = X_batch.to(device), y_batch.to(device).type(torch.cuda.FloatTensor)
 
-    opt.zero_grad()
+    opt.zero_grad(set_to_none = True)
     
     y_pred = model(X_batch)
 
