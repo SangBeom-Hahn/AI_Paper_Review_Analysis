@@ -18,6 +18,7 @@
 
 ```python
 # CNN과 트랜스포머 중 어떤 것을 쓸지 혼합할 지 고민해라
+# cnn은 얼굴같은 가까운 거 잘잡고, 트랜은 멀고 데이터가 많아야만 잘 잡음
 class MyModel(nn.Module): 
   def __init__(self):
     super().__init__()
