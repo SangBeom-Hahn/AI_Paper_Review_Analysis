@@ -154,6 +154,7 @@ C = ConvolutionalNeuralNetworkClass(
 
 
 ```python
+# 🚨 학습 속도 최적화 방법(GradScaler, zero_grad non_blocking) 들어 있음
 # 데이터 셋 구성(train, test)가 다른 데이터 셋, 간단한 건 ml basic 따라치기 1
 train_dataset = (데이터 로더 활용 블로그, 레벨 1 커스텀 데이터 셋 참고)
 test_dataset = (")
@@ -170,6 +171,7 @@ model.to(device)
 criti = nn.BCEWithLogitsLoss()
 # 옵티마이저를 어떤 파라미터에 대해 할 것인지
 opt = optim.Adam(model.parameters(), lr = LEARNING_RATE)
+scaler = torch.cuda.amp.GradScaler()
 
 # 간단하게 : 아래 코드, ML basic 따라치기 2 참고
 # 깊게 : 파탬 참고
@@ -180,17 +182,19 @@ for epoch in range(1, EPOCHS+1):
   model.train() 
 
   for X_batch, y_batch in dataloader:
-    X_batch, y_batch = X_batch.to(device), y_batch.to(device).type(torch.cuda.FloatTensor)
-
+    X_batch, y_batch = X_batch.to(device, non_blocking=True), y_batch.to(device, non_blocking=True).type(torch.cuda.FloatTensor)
+  
     opt.zero_grad(set_to_none = True)
-    
-    y_pred = model(X_batch)
+    with torch.cuda.amp.autocast():
+      y_pred = model(X_batch)
+      y_pred = torch.argmax(y_pred, dim=-1)
+      loss = criti(y_pred, y_batch.unsqueeze(1)) # y를 1행 n열이 아닌 n행 1열로 만듬 (n, )가 (n, 1)로 됨
 
-    loss = criti(y_pred, y_batch.unsqueeze(1)) # y를 1행 n열이 아닌 n행 1열로 만듬 (n, )가 (n, 1)로 됨
+    scaler.scale(loss).backward()
+    scaler.step(opt)
+    scaler.update()
+
     acc = binary_acc(y_pred, y_batch.unsqueeze(1))
-
-    loss.backward()
-    opt.step()
 
     epoch_loss += loss.item() # tensor([3]) 텐서에서 값(3)만 가져오기
     epoch_acc += acc.item()
