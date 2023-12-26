@@ -153,10 +153,9 @@ C = ConvolutionalNeuralNetworkClass(
   <li><h3>학습 프로세스</h3></li>
 </ul>
 
-
 ```python
 # 🚨 학습 속도 최적화 방법(GradScaler, zero_grad non_blocking) 들어 있음
-# 데이터 셋 구성(train, test)가 다른 데이터 셋, 간단한 건 ml basic 따라치기 1
+# 간단한 건 ml basic 따라치기 1
 train_dataset = (데이터 로더 활용 블로그, 레벨 1 커스텀 데이터 셋 참고)
 test_dataset = (")
 
@@ -176,6 +175,7 @@ scaler = torch.cuda.amp.GradScaler()
 
 # 간단하게 : 아래 코드, ML basic 따라치기 2 참고
 # 깊게 : 파탬 참고
+# 로스 레벨 1 참고
 for epoch in range(1, EPOCHS+1):
   epoch_loss = 0
   epoch_acc = 0
