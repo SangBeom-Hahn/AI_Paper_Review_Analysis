@@ -174,7 +174,7 @@ opt = optim.Adam(model.parameters(), lr = LEARNING_RATE)
 scaler = torch.cuda.amp.GradScaler()
 
 # 간단하게 : 아래 코드, ML basic 따라치기 2 참고
-# 깊게 : 파탬 참고
+# 깊게[약간 추상화] : 파탬 참고/ 깊게[추상화] : 레벨 2참고
 # 로스 레벨 1 참고
 for epoch in range(1, EPOCHS+1):
   epoch_loss = 0
@@ -191,12 +191,7 @@ for epoch in range(1, EPOCHS+1):
       y_pred = torch.argmax(y_pred, dim=-1)
       loss = criti(y_pred, y_batch.unsqueeze(1)) # y를 1행 n열이 아닌 n행 1열로 만듬 (n, )가 (n, 1)로 됨
 
-    scaler.scale(loss).backward()
-    scaler.step(opt)
-    scaler.update()
-
     acc = binary_acc(y_pred, y_batch.unsqueeze(1))
-
     epoch_loss += loss.item() # tensor([3]) 텐서에서 값(3)만 가져오기
     epoch_acc += acc.item()
 
@@ -209,7 +204,6 @@ for epoch in range(1, EPOCHS+1):
 
     # 에폭별 손실과 정확도를 출력합니다.
     print(f'Epoch {epoch+0:03}: | Loss: {epoch_loss/len(dataloader):.5f} | Acc: {epoch_acc/len(dataloader):.3f}')
-
 
 # 테스트는 아직 미완성 -> 레벨 1 플젝 보고 하기
 with torch.no_grad():
