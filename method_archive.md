@@ -213,6 +213,34 @@ y_pred = y_pred.argmax(axis=1)
 ```
 
 <ul>
+  <li><h3>교차 검증 학습</h3></li>
+</ul>
+
+```python
+# 파탬 참고
+def kFoldTrain(config):
+    os.makedirs(os.path.join(os.getcwd(), 'results', name), exist_ok=True)
+
+    # 5-fold Stratified KFold 5개의 fold를 형성하고 5번 Cross Validation을 진행합니다.
+    n_splits = 2
+
+    skf = StratifiedKFold(n_splits=n_splits)
+
+    counter = 0
+    patience = 10
+    accumulation_steps = 2
+    best_val_acc = 0
+    best_val_loss = np.inf
+    dataset = config.init_obj("dataset", module_dataset)
+    labels = dataset.y
+
+    # Stratified KFold를 사용해 Train, Valid fold의 Index를 생성합니다.
+    # labels 변수에 담긴 클래스를 기준으로 Stratify를 진행합니다.
+    # 매 이터레이션 총 k개
+    for i, (train_idx, valid_idx) in enumerate(skf.split(dataset.image_list, labels)):
+```
+
+<ul>
   <li><h3>모델 저장 및 로드</h3></li>
 </ul>
 
