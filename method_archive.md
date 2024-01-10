@@ -219,18 +219,11 @@ y_pred = y_pred.argmax(axis=1)
 ```python
 # 파탬 참고
 def kFoldTrain(config):
-    os.makedirs(os.path.join(os.getcwd(), 'results', name), exist_ok=True)
-
     # 5-fold Stratified KFold 5개의 fold를 형성하고 5번 Cross Validation을 진행합니다.
     n_splits = 2
 
     skf = StratifiedKFold(n_splits=n_splits)
-
-    counter = 0
     patience = 10
-    accumulation_steps = 2
-    best_val_acc = 0
-    best_val_loss = np.inf
     dataset = config.init_obj("dataset", module_dataset)
     labels = dataset.y
 
