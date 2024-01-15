@@ -175,7 +175,7 @@ scaler = torch.cuda.amp.GradScaler()
 
 # 간단하게 : 아래 코드, ML basic 따라치기 2 참고
 # 깊게[약간 추상화] : 파탬 참고/ 깊게[추상화] : 레벨 2참고
-# 로스 레벨 1 참고
+# 로스 : 레벨 1 참고
 for epoch in range(1, EPOCHS+1):
   epoch_loss = 0
   epoch_acc = 0
@@ -204,12 +204,29 @@ for epoch in range(1, EPOCHS+1):
 
     # 에폭별 손실과 정확도를 출력합니다.
     print(f'Epoch {epoch+0:03}: | Loss: {epoch_loss/len(dataloader):.5f} | Acc: {epoch_acc/len(dataloader):.3f}')
+```
 
-# 테스트는 아직 미완성 -> 레벨 1 플젝 보고 하기
+<ul>
+  <li><h3>인퍼런스</h3></li>
+</ul>
+
+```python
+# 파탬 참고/ 추상화 : 레벨 2참고
+data_loader = 테스트 데이터 로더 로드
+model = 모델 구격 로드
+criterion = 로스 로드
+metrics = 지표 로드
+checkpoint = torch.load()
+state_dict = checkpoint['state_dict']
+model.load_state_dict(state_dict) # 모델에 가중치 삽입
+
+# 인퍼런스(로스 log에 출력)
 with torch.no_grad():
-    C.eval() # 평가 모드로 바꾸기
-    y_pred = C.forward(test_x.view(-1,1,28,28).type(torch.float).to(device)/255.)
-y_pred = y_pred.argmax(axis=1)
+    for i, (data, target) in enumerate(tqdm(data_loader)):
+        data, target = data.to(device), target.to(device)
+        output = model(data)
+        
+        loss = criterion(output, target)
 ```
 
 <ul>
