@@ -519,10 +519,15 @@ for i,(train_idx, val_idx) in enumerate(cv.split(X, y, groups), start = 1) :
 </ul>
 
 ```python
-start_time = time.time()
-end_time = time.time()
-process = psutil.Process(os.getpid())
-memory_usage = process.memory_info().rss / 1024 / 1024
+def main(args):
+    start_time = time.time()
+    # 학습 코드
+    end_time = time.time()
+    
+    process = psutil.Process(os.getpid())
+    memory_usage = process.memory_info().rss / 1024 / 1024
+    
+    print(f"Total execution time = {end_time - start_time} sec\nMax memory used by tensors = {memory_usage} bytes")
 ```
 
 ## 데이터 파이프 라인
