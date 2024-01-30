@@ -514,6 +514,17 @@ for i,(train_idx, val_idx) in enumerate(cv.split(X, y, groups), start = 1) :
         json.dump(val_data, f, indent=4)
 ```
 
+<ul>
+  <li><h3>메모리, 시간 체크</h3></li>
+</ul>
+
+```python
+start_time = time.time()
+end_time = time.time()
+process = psutil.Process(os.getpid())
+memory_usage = process.memory_info().rss / 1024 / 1024
+```
+
 ## 데이터 파이프 라인
 
 <ul>
